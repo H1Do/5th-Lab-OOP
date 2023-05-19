@@ -95,6 +95,7 @@ Base func4() {
   // temp->name = "func4() returned Base correct";
   return *temp; // Здесь мы отдаём копию объекта, а не его адрес, тем самым теряем его. Происходит утечка памяти
 };
+
 Base* func5() { 
   std::cout << "Base* func5()" << std::endl;
   Base* temp = new Base();
@@ -113,21 +114,21 @@ void second_test() {
   std::cout << std::endl << "Functions that output classes" << std::endl;
 
   std::cout << std::endl << "Constructor:" << std::endl; 
-  Base obj1, obj2, obj3, obj4, obj5, obj6;
+  Base obj1, * obj2, obj4, * obj5;
 
   std::cout << std::endl << "Functions that create static objects" << std::endl;
 	obj1 = func1(); // Base() ~Base()
 	std::cout << std::endl; 
-  obj2 = func2(); // Base() ~Base() Base(Base* obj) ~Base()
+  obj2 = func2(); // Base() ~Base()
 	std::cout << std::endl; 
-  obj3 = func3(); // Base() ~Base()
+  Base &obj3 = func3(); // Base() ~Base()
 
   std::cout << std::endl << "Functions that create dynamic objects" << std::endl;
 	obj4 = func4(); // Base() Base(Base& obj) ~Base()
 	std::cout << std::endl; 
-  obj5 = func5(); // Base() Base(Base* obj) ~Base()
+  obj5 = func5(); // Base()
 	std::cout << std::endl; 
-  obj6 = func6(); // Base()
+  Base &obj6 = func6(); // Base()
   
   std::cout << std::endl;
 }

@@ -10,6 +10,8 @@ public:
   ~Base() { std::cout << "~Base()" << std::endl; }
 };
 
+void func(std::unique_ptr<Base> ptr) { }
+
 int main() {
   Base* obj;
   {
@@ -33,4 +35,9 @@ int main() {
     }
     std::cout << obj1.use_count() << std::endl; // 1
   }
+  std::cout << std::endl;
+
+  auto smart_obj = std::make_unique<Base>(5);
+
+  func(move(smart_obj));
 }
